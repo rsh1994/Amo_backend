@@ -466,3 +466,6 @@ zsdoc/data
 !/tests/_output/.gitkeep
 
 # End of https://www.toptal.com/developers/gitignore/api/python,django,flask,venv,macos,windows,zsh,visualstudiocode
+
+# Secret Key
+my_settings.py
