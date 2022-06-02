@@ -1,5 +1,5 @@
-from .models import Board
-from .serializers import BoardSerializer
+from .models import Board, Comment
+from .serializers import BoardSerializer, CommentSerializer
 from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -12,5 +12,15 @@ class BoardViewSet(viewsets.ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
    
+    def perform_create(self, serializer):
+        serializer.save(user = self.request.user)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    authentication_classes = [BasicAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
